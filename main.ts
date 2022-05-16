@@ -170,20 +170,20 @@ namespace mecanumRobot {
     // }
     
 
-    function i2cRead(addr: number, reg: number) {
+    export function i2cRead(addr: number, reg: number) {
         pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE);
         let val = pins.i2cReadNumber(addr, NumberFormat.UInt8BE);
         return val;
     }
 
-    function i2cWrite(PCA9685_ADDRESS: number, reg: number, value: number) {
+    export function i2cWrite(PCA9685_ADDRESS: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
         buf[0] = reg
         buf[1] = value
         pins.i2cWriteBuffer(PCA9685_ADDRESS, buf)
     }
 
-    function setFreq(freq: number): void {
+    export function setFreq(freq: number): void {
         // Constrain the frequency
         let prescaleval = 25000000;
         prescaleval /= 4096;
@@ -199,7 +199,7 @@ namespace mecanumRobot {
         i2cWrite(PCA9685_ADDRESS, MODE1, oldmode | 0xa1);
     }
 
-    function setPwm(channel: number, on: number, off: number): void {
+    export function setPwm(channel: number, on: number, off: number): void {
         let buf = pins.createBuffer(5);
         buf[0] = LED0_ON_L + 4 * channel;
         buf[1] = on & 0xff;
